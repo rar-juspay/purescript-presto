@@ -156,12 +156,12 @@ initUI :: Flow Unit
 initUI = wrap $ InitUI (makeAff (\cb -> PrestoDOM.initUI cb)) identity
 
 -- | Initialize all states and machines required by PrestoDOM. Takes a PrestoDOM Screen and returns control back immediately.
-initUIWithScreen :: forall action state. (Screen action state Unit) -> Flow Unit
-initUIWithScreen screen = wrap $ InitUIWithScreen (makeAff (\cb -> PrestoDOM.initUIWithScreen screen cb)) identity
+initUIWithScreen :: forall action state. String -> (Screen action state Unit) -> Flow Unit
+initUIWithScreen screenGroup screen = wrap $ InitUIWithScreen (makeAff (\cb -> PrestoDOM.initUIWithScreen screenGroup screen cb)) identity
 
 -- | Runs PrestoDOM Screen and returns the result. In this case, the whole screen is rerendered.
-runScreen :: forall action state s. (Screen action state s) -> Flow s
-runScreen screen = wrap $ RunScreen (makeAff (\cb -> PrestoDOM.runScreen screen cb)) identity
+runScreen :: forall action state s. String -> (Screen action state s) -> Flow s
+runScreen screenGroup screen = wrap $ RunScreen (makeAff (\cb -> PrestoDOM.runScreen screenGroup screen cb)) identity
 
 -- | Runs PrestoDOM Screen as overlay. Overlay screens are cached for reusing.
 showScreen :: forall action state s. (Screen action state s) -> Flow s
